@@ -36,6 +36,7 @@ class CreateTables extends Migration
             $table->foreignId('id_list');
             $table->string('description', 100);
             $table->text('details')->nullable();
+            $table->boolean('completed')->default(false);
             $table->timestamps();
             $table->softDeletes();
 

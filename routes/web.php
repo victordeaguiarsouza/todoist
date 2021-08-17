@@ -1,24 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Livewire\ShowLists;
 
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+//Route::get('/lists/mylists', ShowLists::class);
+
+Route::get('/lists', function () {
+    
+    return (new ShowLists())->render();
+    //return view('livewire.show-lists');
+})->middleware(['auth'])->name('lists');
 
 require __DIR__.'/auth.php';

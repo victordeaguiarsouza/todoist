@@ -4,96 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task;
+use App\Commons\Contents\Content;
 use Illuminate\Support\Facades\Auth;
-
+use App\Routines\Tasks\Save;
+use App\Routines\Tasks\Update;
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         return Task::orderBy('created_at', 'DESC')->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-
-        $newTask = new Task();
-        $newTask->id_list     = $request->task['id_list'];
-        $newTask->id_user     = $request->task['id_user'];
-        $newTask->description = $request->task['description'];
-
-        $newTask->save();
-
-        return $newTask;
+        return (new Save())->execute($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
-    {
-        $existingTask = Task::find($id);
-
-        if(!$existingTask) return "Task not found.";
-
-        $existingTask->completed = $request->list['completed'] ? true : false;
-
-        return $existingTask;
-
+    {   
+        return (new Update())->execute($request, $id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

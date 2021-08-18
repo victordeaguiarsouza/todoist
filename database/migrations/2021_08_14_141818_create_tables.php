@@ -40,7 +40,7 @@ class CreateTables extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('id_list')->references('id')->on('lists');
+            $table->foreign('id_list')->references('id')->on('lists')->onDelete('cascade');
         });
 
         Schema::create('subtasks', function (Blueprint $table) {

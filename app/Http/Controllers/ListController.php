@@ -3,93 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lists;
+use App\Routines\Lists\Save;
+use App\Routines\Lists\Update;
+use App\Routines\Lists\Delete;
 use Illuminate\Http\Request;
 
 class ListController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         return Lists::orderBy('created_at', 'DESC')->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $newList = new Lists();
-
-        $newList->name = $request->list['name'];
-        $newList->save();
-
-        return $newList;
+        return (new Save())->execute($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $existingList = Lists::fin($id);
-
-        if ($existingList) {
-            $existingList->completed = $request->list['completed'] ? true : false;
-        }
-
+        return (new Update())->execute($request, $id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        return (new Delete())->execute($id);
     }
+
+    public function restore($id)
+    {
+        return (new Restore())->execute($id);
+    }
+
 }

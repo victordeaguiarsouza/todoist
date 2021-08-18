@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Routines\Lists;
+namespace App\Routines\Tasks;
 
 use App\Commons\Mvc\Routines\DeleteBase;
-use Illuminate\Http\Request;
-use App\Models\Lists;
+use App\Models\Task;
 
 class Delete extends DeleteBase
 {
 
     public function execute(int $id){
 
-        return parent::delete(Lists::class, $id);
+        return parent::delete(Task::class, $id);
     }
 
 }

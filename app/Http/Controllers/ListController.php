@@ -14,7 +14,7 @@ class ListController extends Controller
 
     public function index()
     {
-        return Lists::orderBy('created_at', 'DESC')->get();
+        return Lists::orderBy('created_at', 'DESC')->paginate(15);
     }
 
     public function store(Request $request)

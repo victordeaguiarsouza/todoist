@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Task;
-use App\Commons\Contents\Content;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Task;
 use App\Routines\Tasks\Save;
 use App\Routines\Tasks\Update;
+use App\Routines\Tasks\Delete;
+use App\Routines\Tasks\Restore;
 class TaskController extends Controller
 {
 
     public function index()
     {
-        return Task::orderBy('created_at', 'DESC')->get();
+        return Task::orderBy('created_at', 'DESC')->paginate(15);
     }
 
     public function store(Request $request)
@@ -21,13 +22,18 @@ class TaskController extends Controller
         return (new Save())->execute($request);
     }
 
-    public function update(Request $request, $id)
-    {   
+    public function update(Request $request, int $id)
+    {
         return (new Update())->execute($request, $id);
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        return (new Delete())->execute($id);
+    }
+
+    public function restore(int $id)
+    {
+        return (new Restore())->execute($id);
     }
 }

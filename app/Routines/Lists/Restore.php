@@ -9,7 +9,7 @@ use App\Models\Lists;
 class Restore
 {
 
-    public function execute(Integer $id){
+    public function execute(int $id){
 
         $content = new Content();
 

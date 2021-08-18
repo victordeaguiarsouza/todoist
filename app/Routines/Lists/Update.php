@@ -9,7 +9,7 @@ use App\Models\Lists;
 class Update
 {
 
-    public function execute(Request $request, Integer $id){
+    public function execute(Request $request, int $id){
 
         $content = new Content();
         

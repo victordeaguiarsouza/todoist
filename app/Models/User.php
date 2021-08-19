@@ -46,7 +46,7 @@ class User extends Authenticatable
     
     public function lists(){
         
-        return $this->belongsToMany(related:Lists::class, table: 'users_lists', foreignPivotKey: 'id_user', relatedPivotKey: 'id_list');
+        return $this->belongsToMany(related: Lists::class, table: 'users_lists', foreignPivotKey: 'user_id', relatedPivotKey: 'list_id')->withTimestamps();
     
     }
 

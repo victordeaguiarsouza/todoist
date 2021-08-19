@@ -22,35 +22,37 @@ class CreateTables extends Migration
 
         Schema::create('users_lists', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user');
-            $table->foreignId('id_list');
+            $table->foreignId('user_id');
+            $table->foreignId('list_id');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('id_user')->references('id')->on('users');
-            $table->foreign('id_list')->references('id')->on('lists');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('list_id')->references('id')->on('lists')->onDelete('cascade');
         });
 
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_list');
+            $table->foreignId('list_id');
             $table->string('description', 100);
             $table->text('details')->nullable();
             $table->boolean('completed')->default(false);
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('id_list')->references('id')->on('lists')->onDelete('cascade');
+            $table->foreign('list_id')->references('id')->on('lists')->onDelete('cascade');
         });
 
         Schema::create('subtasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_main_task');
-            $table->foreignId('id_task');
+            $table->foreignId('main_task_id');
+            $table->foreignId('task_id');
             $table->timestamps();
 
-            $table->foreign('id_main_task')->references('id')->on('tasks');
-            $table->foreign('id_task')     ->references('id')->on('tasks');
+            $table->index(['main_task_id', 'task_id'])->unique();
+
+            $table->foreign('main_task_id')->references('id')->on('tasks');
+            $table->foreign('task_id')     ->references('id')->on('tasks');
         });
 
     }

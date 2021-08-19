@@ -6,18 +6,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\SubTask;
 use App\Models\User;
+use App\Models\Lists
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 class Task extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['id_user','id_list', 'description', 'details', 'completed'];
+    protected $fillable = ['user_id', 'list_id', 'description', 'details', 'completed'];
 
     public function subTasks(){
         
         return $this->hasMany(SubTask::class);
+    
+    }
+
+    public function lists(){
+        
+        return $this->belongsTo(Lists::class);
     
     }
 
@@ -26,5 +32,4 @@ class Task extends Model
         return $this->belongsTo(User::class);
     
     }
-
 }

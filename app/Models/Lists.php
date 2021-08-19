@@ -17,9 +17,21 @@ class Lists extends Model
 
     protected $fillable = ['id_user', 'name'];
 
+    protected static function boot() {
+        parent::boot();
+    
+        static::deleting(function($offer) {
+            $offer->tasks()->delete();
+        });
+
+        static::restoring(function($offer) {
+            $offer->tasks()->restore();
+        });
+    }
+
     public function users(){
         
-        return $this->belongsToMany(related:User::class, table: 'users_lists', foreignPivotKey: 'id_user', relatedPivotKey: 'id_list');
+        return $this->belongsToMany(related:User::class, table: 'users_lists', foreignPivotKey: 'user_id', relatedPivotKey: 'list_id');
     
     }
 

@@ -14,7 +14,15 @@ class ListController extends Controller
 
     public function index()
     {
-        return Lists::orderBy('created_at', 'DESC')->paginate(15);
+        return Lists::select(
+                    'lists.name  AS list_name',
+                    'users.name  AS user_name',
+                    'users.email AS user_email'
+                )
+               ->leftJoin('users_lists AS ul', 'lists.id', '=', 'ul.list_id')
+               ->leftJoin('users', 'users.id', '=', 'ul.user_id')
+               ->orderBy('lists.created_at', 'DESC')
+               ->paginate(15);
     }
 
     public function store(Request $request)

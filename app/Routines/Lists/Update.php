@@ -12,11 +12,11 @@ class Update extends UpdateBase
 
     protected function getModel(int $id){
 
-        $list = Lists::find($id);
+        $lists = Lists::find($id);
 
-        if(!$list) throw new \Exception("List not found.");
+        if(!$lists) throw new \Exception("List not found.");
 
-        return $list;
+        return $lists;
     }
 
     public function execute(Request $request, int $id){

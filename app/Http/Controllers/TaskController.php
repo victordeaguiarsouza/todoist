@@ -14,7 +14,18 @@ class TaskController extends Controller
 
     public function index()
     {
-        return Task::orderBy('created_at', 'DESC')->paginate(15);
+        return Task::select(
+                    'tasks.list_id',
+                    'tasks.user_id',
+                    'u.name AS user_name',
+                    'tasks.description',
+                    'tasks.details',
+                    'tasks.completed',
+                    'lists.name AS list_name'
+               )
+               ->leftJoin('lists AS l', 'tasks.list_id', '=', 'l.id')
+               ->leftJoin('users AS u', 'tasks.user_id', '=', 'u.id')
+               ->orderBy('created_at', 'DESC')->paginate(15);
     }
 
     public function store(Request $request)

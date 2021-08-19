@@ -28,6 +28,23 @@ class TaskController extends Controller
                ->orderBy('tasks.created_at', 'DESC')->paginate(15);
     }
 
+    public function byUser(int $id)
+    {
+        return Task::select(
+                    'tasks.list_id',
+                    'tasks.user_id',
+                    'u.name AS user_name',
+                    'tasks.description',
+                    'tasks.details',
+                    'tasks.completed',
+                    'l.name AS list_name'
+               )
+               ->where('tasks.user_id', '=', $id)
+               ->leftJoin('lists AS l', 'tasks.list_id', '=', 'l.id')
+               ->leftJoin('users AS u', 'tasks.user_id', '=', 'u.id')
+               ->orderBy('tasks.created_at', 'DESC')->paginate(15);
+    }
+
     public function store(Request $request)
     {
         return (new Save())->execute($request);

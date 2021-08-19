@@ -25,6 +25,20 @@ class ListController extends Controller
                ->paginate(15);
     }
 
+    public function byUser(int $id)
+    {
+        return Lists::select(
+                    'lists.name  AS list_name',
+                    'users.name  AS user_name',
+                    'users.email AS user_email'
+                )
+                ->where('users.id', '=', $id)
+                ->leftJoin('users_lists AS ul', 'lists.id', '=', 'ul.list_id')
+                ->leftJoin('users', 'users.id', '=', 'ul.user_id')
+                ->orderBy('lists.created_at', 'DESC')
+                ->paginate(15);
+    }
+
     public function store(Request $request)
     {
         return (new Save())->execute($request);

@@ -29,7 +29,7 @@ class Save extends SaveBase
         if(!$user) throw new \Exception("User not found.");
 
         $this->model->name = $this->request->name;
-        $this->model->save(); 
+        $this->model->save();
         $this->model->users()->attach($user);
     }
 

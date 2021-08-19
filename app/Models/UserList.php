@@ -11,6 +11,7 @@ class UserList extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'users_lists';
+    protected $table    = 'users_lists';
+    protected $fillable = ['user_id','list_id', 'name'];
     
 }

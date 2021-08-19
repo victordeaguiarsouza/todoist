@@ -36,9 +36,10 @@ class Save extends SaveBase
         if(!$user) throw new \Exception("User not found.");
 
         $this->model->description = $this->request->description;
-        $this->model->details     = $this->request->destails;
+        $this->model->details     = $this->request->details;
+        $this->model->list_id     = $listId;
 
-        $this->model->lists()->associate($list);
+        //$this->model->lists()->associate($list);
         $this->model->user()->associate($user);
     }
 

@@ -21,11 +21,11 @@ class TaskController extends Controller
                     'tasks.description',
                     'tasks.details',
                     'tasks.completed',
-                    'lists.name AS list_name'
+                    'l.name AS list_name'
                )
                ->leftJoin('lists AS l', 'tasks.list_id', '=', 'l.id')
                ->leftJoin('users AS u', 'tasks.user_id', '=', 'u.id')
-               ->orderBy('created_at', 'DESC')->paginate(15);
+               ->orderBy('tasks.created_at', 'DESC')->paginate(15);
     }
 
     public function store(Request $request)

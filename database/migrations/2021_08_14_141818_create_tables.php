@@ -34,6 +34,7 @@ class CreateTables extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('list_id');
+            $table->foreignId('user_id');
             $table->string('description', 100);
             $table->text('details')->nullable();
             $table->boolean('completed')->default(false);
@@ -41,6 +42,7 @@ class CreateTables extends Migration
             $table->softDeletes();
 
             $table->foreign('list_id')->references('id')->on('lists')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
         Schema::create('subtasks', function (Blueprint $table) {

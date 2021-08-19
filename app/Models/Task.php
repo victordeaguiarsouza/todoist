@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\SubTask;
 use App\Models\User;
-use App\Models\Lists
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Lists;
 class Task extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['user_id', 'list_id', 'description', 'details', 'completed'];
+    protected $fillable = ['list_id', 'user_id', 'description', 'details', 'completed'];
 
     public function subTasks(){
         
@@ -23,7 +23,7 @@ class Task extends Model
 
     public function lists(){
         
-        return $this->belongsTo(Lists::class);
+        return $this->belongsTo(Lists::class, 'list_id');
     
     }
 

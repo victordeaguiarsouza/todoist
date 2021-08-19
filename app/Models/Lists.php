@@ -15,7 +15,7 @@ class Lists extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['id_user', 'name'];
+    protected $fillable = ['user_id', 'name'];
 
     protected static function boot() {
         parent::boot();
@@ -31,13 +31,13 @@ class Lists extends Model
 
     public function users(){
         
-        return $this->belongsToMany(related:User::class, table: 'users_lists', foreignPivotKey: 'user_id', relatedPivotKey: 'list_id');
+        return $this->belongsToMany(related:User::class, table: 'users_lists', foreignPivotKey: 'list_id', relatedPivotKey: 'user_id')->withTimestamps();
     
     }
 
     public function tasks(){
         
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class, 'list_id');
     
     }
 }

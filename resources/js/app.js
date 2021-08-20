@@ -15,7 +15,7 @@ library.add(faPlusSquare, faTrash);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-Vue.use(FlashMessage, { time: 4000});
+Vue.use(FlashMessage, { time: 1000});
 
 const app = new Vue({
     el: '#app',

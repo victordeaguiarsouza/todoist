@@ -1,6 +1,6 @@
 <template>
     <div class="addList">
-        <input type="text" v-model="list.name" autofocus />
+        <input type="text" v-model="list.name" autofocus placeholder="Criar Nova Lista"/>
         <input type="hidden" id="user-id" value="14" />
         <font-awesome-icon 
             icon="plus-square"
@@ -34,7 +34,9 @@
                 .then(response => {
 
                     if(response.data.done){
+                        
                         this.list.name = "";
+                        
                         this.flashMessage.success({
                             title: 'Success',
                             message: response.data.message,
@@ -43,10 +45,14 @@
                                 backgroundColor: 'linear-gradient(#e66465, #9198e5)'
                             }
                         });
+
+
                     }else{
                         this.flashMessage.error({title: 'Error', message: response.data.message, time: 4000});    
                     }
-
+                    
+                    this.$emit('reloadlist');
+                    //this.$emit('itemchanged');
                 })
                 .catch(error => {
                     console.log(error);

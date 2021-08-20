@@ -28,6 +28,7 @@ class ListController extends Controller
     public function byUser(int $id)
     {
         return Lists::select(
+                    'lists.id',
                     'lists.name  AS list_name',
                     'users.name  AS user_name',
                     'users.email AS user_email'

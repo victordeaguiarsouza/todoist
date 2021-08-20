@@ -3,11 +3,15 @@
     <div class="todoistContainer">
     
         <div class="heading">
-            <h2>Nova Lista</h2>
-            <add-list-form />
+            <add-list-form 
+                v-on:reloadlist="getList()"
+            />
         </div>
     
-        <list-view />
+        <list-view 
+            :lists="lists"
+            v-on:reloadlist="getList()"
+        />
     
     </div>
 
@@ -22,12 +26,36 @@
         components: {
             addListForm,
             listView
-        }    
+        },
+        data: function() {
+            return {
+                lists: []
+            }
+        },
+        methods: {
+            getList () {
+
+                axios.get('api/list/by_user/14')
+                .then(response => {
+                    this.lists = response.data.data;
+
+                    this.$emit('reloadlist');
+                })
+                .catch(erro => {
+                    console.log(error);
+                    this.flashMessage.error({title: error.name || 'Error', message: error.message});
+                });
+            }
+        },
+        created(){
+            this.getList();
+        }
     }
 </script>
 
 <style scoped>
-/* .todoistContainer {
+/* 
+.todoistContainer {
     width: 350px;
     margin: auto;
 } */
@@ -35,6 +63,7 @@
 .heading {
     background: #e6e6e6;
     padding: 10px;
+    border-radius: 10px;
 }
 
 #title {

@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 
+
 mix.override(config => {
     // Apply a workaround caused by Laravel Mix using the `webpack-dev-server@v4.0.0-beta`:
     // https://github.com/webpack/webpack-dev-server/releases/tag/v4.0.0-beta.3.

@@ -35,7 +35,7 @@
         methods: {
             getList () {
 
-                axios.get('api/list/by_user/14')
+                axios.get('api/list/by_user/' + document.getElementById('user-id').value)
                 .then(response => {
                     this.lists = response.data.data;
 

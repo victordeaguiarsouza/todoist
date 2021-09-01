@@ -13982,7 +13982,7 @@ __webpack_require__.r(__webpack_exports__);
     getList: function getList() {
       var _this = this;
 
-      axios.get('api/list/by_user/14').then(function (response) {
+      axios.get('api/list/by_user/' + document.getElementById('user-id').value).then(function (response) {
         _this.lists = response.data.data;
 
         _this.$emit('reloadlist');
@@ -14027,18 +14027,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['item'],
+  data: function data() {
+    return {
+      isCheck: false
+    };
+  },
   methods: {
+    updateCheck: function updateCheck() {
+      //Adicionei somente o efeito pois a modelagem está errada.
+      //não precisaria da tabela 'lists'. Poderia usar somente 
+      //a tabela 'tasks' e tratar tudo como task
+      this.isCheck = !this.isCheck;
+      /* axios.put('api/list/'+this.item.id, {
+      
+          name      : this.item.name,
+          completed : this.item.completed
+      
+      }).then(response => {
+           if(response.data.done){
+              this.$emit('itemchanged');
+          }else{
+              this.flashMessage.error({title: error.name || 'Error', message: response.data.message});
+          }
+       }).catch(error => {
+          console.log( error );
+          this.flashMessage.error({title: error.name || 'Error', message: error.message});
+      }); */
+    },
     removeItem: function removeItem() {
       var _this = this;
 
       axios["delete"]('api/list/' + this.item.id).then(function (response) {
         if (response.data.done) {
           _this.$emit('itemchanged');
+        } else {
+          _this.flashMessage.error({
+            title: error.name || 'Error',
+            message: response.data.message
+          });
         }
       })["catch"](function (error) {
         console.log(error);
+
+        _this.flashMessage.error({
+          title: error.name || 'Error',
+          message: error.message
+        });
       });
     }
   }
@@ -14215,7 +14252,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.itemText[data-v-0bfa3738] {\n    width: 100%;\n    margin-left: 15px;\n}\n.trashcan[data-v-0bfa3738] {\n    background: #e6e6e6;\n    border: none;\n    color: #FF0000;\n    outline: none;\n    float: right;\n    margin-right: 10px;\n}\n.item[data-v-0bfa3738] {\n    border-radius: 10px;\n}\n.checkbox[data-v-0bfa3738] {\n    margin-left: 10px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.completed[data-v-0bfa3738] {\n    text-decoration: line-through;\n    color: #999999;\n}\n.itemText[data-v-0bfa3738] {\n    width: 100%;\n    margin-left: 15px;\n}\n.trashcan[data-v-0bfa3738] {\n    background: #e6e6e6;\n    border: none;\n    color: #FF0000;\n    outline: none;\n    float: right;\n    margin-right: 10px;\n}\n.item[data-v-0bfa3738] {\n    border-radius: 10px;\n}\n.checkbox[data-v-0bfa3738] {\n    margin-left: 10px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -32529,8 +32566,6 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", id: "user-id", value: "14" } }),
-      _vm._v(" "),
       _c("font-awesome-icon", {
         class: [_vm.list.name ? "active" : "inactive", "plus"],
         attrs: { icon: "plus-square" },
@@ -32624,9 +32659,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "item" }, [
-    _c("input", { staticClass: "inputCheck", attrs: { type: "checkbox" } }),
+    _c("input", {
+      staticClass: "inputCheck",
+      attrs: { type: "checkbox" },
+      on: {
+        change: function($event) {
+          return _vm.updateCheck()
+        }
+      }
+    }),
     _vm._v(" "),
-    _c("span", { staticClass: "itemText" }, [
+    _c("span", { class: [_vm.isCheck ? "completed" : "", "itemText"] }, [
       _vm._v(_vm._s(_vm.item.list_name))
     ]),
     _vm._v(" "),

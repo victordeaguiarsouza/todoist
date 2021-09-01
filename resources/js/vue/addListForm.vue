@@ -1,7 +1,7 @@
 <template>
     <div class="addList">
         <input type="text" v-model="list.name" autofocus placeholder="Criar Nova Lista"/>
-        <input type="hidden" id="user-id" value="14" />
+        <!-- <input type="hidden" id="user-id" value="14" /> -->
         <font-awesome-icon 
             icon="plus-square"
             @click="addList()"
